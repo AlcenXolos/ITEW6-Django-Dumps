@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}My Movie Collection{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">{{ user.username }}'s Movie List</h1>
+    
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <ul class="list-group mt-4">
+                {% for movie in movies %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{{ movie.title }}</span>
+                        <a href="{% url 'movie_detail' movie.id %}" class="btn btn-primary btn-sm">View Details</a>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item text-center">You have no movies yet. Start by adding some!</li>
+                {% endfor %}
+            </ul>
+
+            <!-- Buttons below the list -->
+            <div class="mt-4 text-center">
+                <a href="{% url 'movie_create' %}" class="btn btn-success mx-2">Add New Movie</a>
+                <a href="{% url 'all_movies' %}" class="btn btn-secondary mx-2">View All Movies</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% comment %} {% extends 'base.html' %}
+{% block title %}My Movies{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>My Movies</h2>
+    <a class="btn btn-success" href="{% url 'movie_create' %}">Add New Movie</a>
+</div>
+
+{% if movies %}
+    <div class="row">
+        {% for movie in movies %}
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ movie.title }}</h5>
+                        <p class="card-text"><strong>Genre:</strong> {{ movie.genre }}</p>
+                        <p class="card-text"><strong>Year:</strong> {{ movie.release_year }}</p>
+                        <a href="{% url 'movie_detail' movie.pk %}" class="btn btn-primary">Details</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>You haven't added any movies yet.</p>
+{% endif %}
+{% endblock %} {% endcomment %}
